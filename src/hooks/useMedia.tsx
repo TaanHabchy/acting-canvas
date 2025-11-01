@@ -29,20 +29,7 @@ export const useMedia = (type?: 'video' | 'photo') => {
 
       if (error) throw error;
 
-      // Get public URLs for all media
-      const mediaWithUrls = data.map((item) => {
-        const bucket = item.type === 'video' ? 'videos' : 'photos';
-        const { data: urlData } = supabase.storage
-          .from(bucket)
-          .getPublicUrl(item.storage_path);
-
-        return {
-          ...item,
-          url: urlData.publicUrl,
-        };
-      });
-
-      return mediaWithUrls;
+      return data
     },
   });
 };

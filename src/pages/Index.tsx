@@ -4,7 +4,6 @@ import { useMedia } from "@/hooks/useMedia";
 
 const Index = () => {
   const { data: videos, isLoading, error } = useMedia('video');
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -25,7 +24,7 @@ const Index = () => {
           </div>
         )}
         {videos && videos.map((video) => (
-          <VideoSection key={video.id} videoUrl={video.url} />
+          <VideoSection key={video.id} videoUrl={video.storage_path} />
         ))}
       </div>
     </div>

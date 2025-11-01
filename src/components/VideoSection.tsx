@@ -13,6 +13,7 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
         playsInline
         preload="metadata"
         autoPlay={true}
+        muted={true}
       />
     </section>
   );
