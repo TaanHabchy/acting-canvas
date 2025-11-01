@@ -57,19 +57,19 @@ const MediaManager = () => {
       
       // Upload file if a new one is selected
       if (selectedFile) {
+        const bucketName = formData.type === "video" ? "videos" : "photos";
         const fileExt = selectedFile.name.split('.').pop();
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-        const filePath = `${formData.type}s/${fileName}`;
         
         const { error: uploadError } = await supabase.storage
-          .from('portfolio-media')
-          .upload(filePath, selectedFile);
+          .from(bucketName)
+          .upload(fileName, selectedFile);
         
         if (uploadError) throw uploadError;
         
         const { data: { publicUrl } } = supabase.storage
-          .from('portfolio-media')
-          .getPublicUrl(filePath);
+          .from(bucketName)
+          .getPublicUrl(fileName);
         
         storagePath = publicUrl;
       }
