@@ -3,9 +3,9 @@ import { Card } from "@/components/ui/card";
 import { useExperience } from "@/hooks/useExperience";
 
 const Resume = () => {
-  const { data: experiences, isLoading: experiencesLoading } = useExperience('experience');
-  const { data: training, isLoading: trainingLoading } = useExperience('training');
-  const { data: skills, isLoading: skillsLoading } = useExperience('skills');
+  const { data: experiences, isLoading: experiencesLoading } = useExperience(['short film', 'theatre', 'tv']);
+  const { data: training, isLoading: trainingLoading } = useExperience(['training']);
+  const { data: skills, isLoading: skillsLoading } = useExperience(['skill']);
 
   return (
     <div className="min-h-screen bg-background">
@@ -20,13 +20,33 @@ const Resume = () => {
               <p className="text-foreground/70">Loading...</p>
             ) : (
               <div className="space-y-6">
-                {experiences?.map((exp) => (
-                  <div key={exp.id}>
-                    <h3 className="text-xl font-semibold text-foreground">{exp.title}</h3>
-                    <p className="text-muted-foreground mb-2">{exp.company} | {exp.year}</p>
-                    <p className="text-foreground/80">{exp.description}</p>
-                  </div>
-                ))}
+                {experiences &&
+                    Object.entries(
+                        experiences.reduce((acc, exp) => {
+                          if (!acc[exp.type]) acc[exp.type] = [];
+                          acc[exp.type].push(exp);
+                          return acc;
+                        }, {} as Record<string, typeof experiences>)
+                    ).map(([type, exps]) => (
+                        <section key={type} className="mb-6">
+                          <h2 className="text-xl font-bold capitalize mb-3 text-foreground">
+                            {type}
+                          </h2>
+                          {exps.map((exp) => (
+                              <div key={exp.id} className="mb-3">
+                                <h3 className="text-l font-semibold text-foreground">
+                                  {exp.title}
+                                </h3>
+                                <p className="text-muted-foreground mb-2">
+                                  {exp.director || exp.studio
+                                      ? `${exp.director || exp.studio} • ${exp.role ?? ''}`
+                                      : exp.role}
+                                </p>
+                              </div>
+                          ))}
+                        </section>
+                    ))}
+
               </div>
             )}
           </Card>
@@ -40,7 +60,7 @@ const Resume = () => {
                 {training?.map((item) => (
                   <div key={item.id}>
                     <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.description} | {item.year}</p>
+                    <p className="text-muted-foreground">{item.director} • {item.studio}</p>
                   </div>
                 ))}
               </div>
