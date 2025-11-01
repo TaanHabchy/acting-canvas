@@ -19,7 +19,6 @@ const MediaManager = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
-    description: "",
     type: "video" as "video" | "photo",
     storage_path: "",
     display_order: 0,
@@ -28,7 +27,6 @@ const MediaManager = () => {
 
   const resetForm = () => {
     setFormData({
-      description: "",
       type: "video",
       storage_path: "",
       display_order: 0,
@@ -106,7 +104,6 @@ const MediaManager = () => {
 
   const handleEdit = (item: any) => {
     setFormData({
-      description: item.description || "",
       type: item.type,
       storage_path: item.storage_path,
       display_order: item.display_order,
@@ -191,17 +188,6 @@ const MediaManager = () => {
               Leave empty to keep current file
             </p>
           )}
-        </div>
-
-        <div>
-          <Label htmlFor="description">Description</Label>
-          <Textarea
-            id="description"
-            value={formData.description}
-            onChange={(e) => 
-              setFormData({ ...formData, description: e.target.value })
-            }
-          />
         </div>
 
         <div className="flex items-center gap-2">
