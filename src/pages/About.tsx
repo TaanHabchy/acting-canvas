@@ -1,7 +1,14 @@
 import Navigation from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
+import { useMedia } from "@/hooks/useMedia";
+import { supabase } from "@/integrations/supabase/client";
 
 const About = () => {
+  const { data: photos, isLoading } = useMedia('photo');
+  const headshotPhoto = photos?.find(photo => photo.display_order === 0);
+  const headshotUrl = headshotPhoto 
+    ? supabase.storage.from('media').getPublicUrl(headshotPhoto.storage_path).data.publicUrl
+    : null;
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -12,9 +19,21 @@ const About = () => {
           <Card className="p-8 md:p-12">
             <div className="grid md:grid-cols-2 gap-12">
               <div className="flex items-center justify-center">
-                <div className="w-64 h-64 rounded-lg bg-muted flex items-center justify-center">
-                  <span className="text-muted-foreground">Headshot</span>
-                </div>
+                {isLoading ? (
+                  <div className="w-64 h-64 rounded-lg bg-muted flex items-center justify-center">
+                    <span className="text-muted-foreground">Loading...</span>
+                  </div>
+                ) : headshotUrl ? (
+                  <img 
+                    src={headshotUrl} 
+                    alt="Headshot" 
+                    className="w-64 h-64 rounded-lg object-cover"
+                  />
+                ) : (
+                  <div className="w-64 h-64 rounded-lg bg-muted flex items-center justify-center">
+                    <span className="text-muted-foreground">No photo</span>
+                  </div>
+                )}
               </div>
               
               <div className="space-y-6">
