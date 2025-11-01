@@ -1,19 +1,85 @@
+import { useEffect, useRef, useState } from "react";
+
 interface VideoSectionProps {
   videoUrl: string;
 }
 
 const VideoSection = ({ videoUrl }: VideoSectionProps) => {
-  return (
-    <section className="h-screen w-full snap-start snap-always flex items-center justify-center bg-background relative overflow-hidden p-8">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/60 z-10" />
-      <video
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const sectionRef = useRef<HTMLElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    setIsVisible(entry.isIntersecting);
+                });
+            },
+            { threshold: 0.6 } // Play when 60% visible
+        );
+
+        if (videoRef.current) {
+            observer.observe(videoRef.current);
+        }
+
+        return () => {
+            if (videoRef.current) observer.unobserve(videoRef.current);
+        };
+    }, []);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (isVisible) {
+            video.play().catch(() => {});
+        } else {
+            video.pause();
+        }
+    }, [isVisible]);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const handleEnded = () => {
+            const next = sectionRef.current?.nextElementSibling as HTMLElement | null;
+            if (next) {
+                next.scrollIntoView({ behavior: "smooth" });
+            }
+        };
+
+        video.addEventListener("ended", handleEnded);
+        return () => video.removeEventListener("ended", handleEnded);
+    }, []);
+
+    return (
+      <section
+          ref={sectionRef}
+          className="relative h-screen w-full snap-start flex items-center justify-center overflow-hidden">
+          {/* Blurred background layer */}
+          <video
+              src={videoUrl}
+              className="absolute inset-0 w-full h-full object-cover blur-3xl scale-110"
+              autoPlay
+              loop
+              muted
+              playsInline
+          />
+
+          {/* Gradient overlay for contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+
+          <video
+              ref={videoRef}
         src={videoUrl}
-        className="w-full h-full object-cover"
+        className="w-2/3 h-2/3 object-cover rounded-lg cursor-pointer z-10"
         controls
         playsInline
         preload="metadata"
         autoPlay={true}
-        muted={true}
       />
     </section>
   );
