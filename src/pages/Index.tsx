@@ -24,7 +24,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <div className="h-screen snap-y snap-mandatory overflow-y-scroll">
+      <div className="h-screen snap-y snap-mandatory overflow-y-scroll p-8">
         {videos.map((video) => (
           <VideoSection key={video.id} videoUrl={video.url} title={video.title} />
         ))}

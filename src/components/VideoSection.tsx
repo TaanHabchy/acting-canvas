@@ -5,7 +5,7 @@ interface VideoSectionProps {
 
 const VideoSection = ({ videoUrl, title }: VideoSectionProps) => {
   return (
-    <section className="h-screen w-full snap-start snap-always flex items-center justify-center bg-background relative overflow-hidden">
+    <section className="h-screen w-full snap-start snap-always flex items-center justify-center bg-background relative overflow-hidden p-8">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/60 z-10" />
       <video
         src={videoUrl}
@@ -13,6 +13,7 @@ const VideoSection = ({ videoUrl, title }: VideoSectionProps) => {
         controls
         playsInline
         preload="metadata"
+        autoPlay={true}
       />
       <div className="absolute bottom-8 left-8 z-20">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground drop-shadow-lg">
