@@ -219,8 +219,8 @@ const MediaManager = () => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Preview</TableHead>
               <TableHead>Type</TableHead>
-              <TableHead>Path</TableHead>
               <TableHead>Order</TableHead>
               <TableHead>Visible</TableHead>
               <TableHead>Actions</TableHead>
@@ -229,8 +229,22 @@ const MediaManager = () => {
           <TableBody>
             {media?.map((item) => (
               <TableRow key={item.id}>
+                <TableCell>
+                  {item.type === "photo" ? (
+                    <img 
+                      src={item.storage_path} 
+                      alt="Media preview" 
+                      className="w-24 h-24 object-cover rounded"
+                    />
+                  ) : (
+                    <video 
+                      src={item.storage_path} 
+                      className="w-24 h-24 object-cover rounded"
+                      muted
+                    />
+                  )}
+                </TableCell>
                 <TableCell className="capitalize">{item.type}</TableCell>
-                <TableCell className="max-w-xs truncate">{item.storage_path}</TableCell>
                 <TableCell>{item.display_order}</TableCell>
                 <TableCell>{item.is_visible ? "Yes" : "No"}</TableCell>
                 <TableCell>
