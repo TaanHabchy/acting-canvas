@@ -16,6 +16,8 @@ const MediaManager = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     description: "",
     type: "video" as "video" | "photo",
@@ -32,17 +34,50 @@ const MediaManager = () => {
       display_order: 0,
       is_visible: true,
     });
+    setSelectedFile(null);
     setEditingId(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!editingId && !selectedFile) {
+      toast({ 
+        title: "Error", 
+        description: "Please select a file to upload",
+        variant: "destructive" 
+      });
+      return;
+    }
+    
+    setUploading(true);
+    
     try {
+      let storagePath = formData.storage_path;
+      
+      // Upload file if a new one is selected
+      if (selectedFile) {
+        const fileExt = selectedFile.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+        const filePath = `${formData.type}s/${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('portfolio-media')
+          .upload(filePath, selectedFile);
+        
+        if (uploadError) throw uploadError;
+        
+        const { data: { publicUrl } } = supabase.storage
+          .from('portfolio-media')
+          .getPublicUrl(filePath);
+        
+        storagePath = publicUrl;
+      }
+      
       if (editingId) {
         const { error } = await supabase
           .from("media")
-          .update(formData)
+          .update({ ...formData, storage_path: storagePath })
           .eq("id", editingId);
         
         if (error) throw error;
@@ -50,7 +85,7 @@ const MediaManager = () => {
       } else {
         const { error } = await supabase
           .from("media")
-          .insert([formData]);
+          .insert([{ ...formData, storage_path: storagePath }]);
         
         if (error) throw error;
         toast({ title: "Media added successfully" });
@@ -64,6 +99,8 @@ const MediaManager = () => {
         description: error.message,
         variant: "destructive" 
       });
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -141,15 +178,19 @@ const MediaManager = () => {
         </div>
 
         <div>
-          <Label htmlFor="storage_path">Storage Path / URL</Label>
+          <Label htmlFor="file">Upload File</Label>
           <Input
-            id="storage_path"
-            value={formData.storage_path}
-            onChange={(e) => 
-              setFormData({ ...formData, storage_path: e.target.value })
-            }
-            required
+            id="file"
+            type="file"
+            accept={formData.type === "video" ? "video/*" : "image/*"}
+            onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+            required={!editingId}
           />
+          {editingId && (
+            <p className="text-sm text-muted-foreground mt-1">
+              Leave empty to keep current file
+            </p>
+          )}
         </div>
 
         <div>
@@ -176,11 +217,11 @@ const MediaManager = () => {
         </div>
 
         <div className="flex gap-2">
-          <Button type="submit">
-            {editingId ? "Update" : "Add"} Media
+          <Button type="submit" disabled={uploading}>
+            {uploading ? "Uploading..." : editingId ? "Update" : "Add"} Media
           </Button>
           {editingId && (
-            <Button type="button" variant="outline" onClick={resetForm}>
+            <Button type="button" variant="outline" onClick={resetForm} disabled={uploading}>
               Cancel
             </Button>
           )}
