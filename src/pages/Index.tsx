@@ -25,7 +25,7 @@ const Index = () => {
           </div>
         )}
         {videos && videos.map((video) => (
-          <VideoSection key={video.id} videoUrl={video.url} title={video.title} />
+          <VideoSection key={video.id} videoUrl={video.url} />
         ))}
       </div>
     </div>

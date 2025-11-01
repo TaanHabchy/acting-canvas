@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 export interface Media {
   id: string;
   created_at: string;
-  title: string;
   description: string | null;
   type: 'video' | 'photo';
   storage_path: string;
