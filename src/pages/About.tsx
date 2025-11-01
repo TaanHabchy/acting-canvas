@@ -7,6 +7,7 @@ const About = () => {
   const { data: photos, isLoading } = useMedia('photo');
   const headshotPhoto = photos?.find(photo => photo.display_order === 0);
   const headshotUrl = headshotPhoto?.storage_path;
+  const portfolioPhotos = photos?.filter(photo => photo.display_order !== 0) || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -68,6 +69,26 @@ const About = () => {
             </div>
           </Card>
         </div>
+
+        {portfolioPhotos.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-3xl font-bold mb-8 text-foreground">Portfolio</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {portfolioPhotos.map((photo) => (
+                <div 
+                  key={photo.id} 
+                  className="group relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <img
+                    src={photo.storage_path}
+                    alt="Portfolio photo"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
