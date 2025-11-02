@@ -7,12 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Pencil, Trash2, Plus, GripVertical } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 const MediaManager = () => {
-  const { data: media, isLoading } = useMedia();
+  const [mediaType, setMediaType] = useState<'video' | 'photo' | undefined>(undefined);
+  const { data: media, isLoading } = useMedia(mediaType);
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -196,6 +198,96 @@ const MediaManager = () => {
 
   if (isLoading) return <p>Loading...</p>;
 
+  const renderMediaTable = () => (
+    <div>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold">Current Media</h3>
+        {!isReordering ? (
+          <Button onClick={startReordering} variant="outline">
+            Reorder Media
+          </Button>
+        ) : (
+          <div className="flex gap-2">
+            <Button onClick={saveReordering}>
+              Save Changes
+            </Button>
+            <Button onClick={cancelReordering} variant="outline">
+              Cancel
+            </Button>
+          </div>
+        )}
+      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {isReordering && <TableHead className="w-12"></TableHead>}
+            <TableHead>Preview</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead>Order</TableHead>
+            <TableHead>Visible</TableHead>
+            {!isReordering && <TableHead>Actions</TableHead>}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {displayMedia?.map((item, index) => (
+            <TableRow 
+              key={item.id}
+              draggable={isReordering}
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={(e) => handleDragOver(e, index)}
+              onDragEnd={handleDragEnd}
+              className={isReordering ? "cursor-move" : ""}
+            >
+              {isReordering && (
+                <TableCell>
+                  <GripVertical className="h-5 w-5 text-muted-foreground" />
+                </TableCell>
+              )}
+              <TableCell>
+                {item.type === "photo" ? (
+                  <img 
+                    src={item.storage_path} 
+                    alt="Media preview" 
+                    className="w-12 h-12 object-cover rounded"
+                  />
+                ) : (
+                  <video 
+                    src={item.storage_path} 
+                    className="w-12 h-12 object-cover rounded"
+                    muted
+                  />
+                )}
+              </TableCell>
+              <TableCell className="capitalize">{item.type}</TableCell>
+              <TableCell>{isReordering ? index : item.display_order}</TableCell>
+              <TableCell>{item.is_visible ? "Yes" : "No"}</TableCell>
+              {!isReordering && (
+                <TableCell>
+                  <div className="flex gap-2">
+                    <Button 
+                      size="icon" 
+                      variant="outline"
+                      onClick={() => handleEdit(item)}
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                      size="icon" 
+                      variant="destructive"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </TableCell>
+              )}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+
   return (
     <div className="space-y-8">
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -276,93 +368,30 @@ const MediaManager = () => {
         </div>
       </form>
 
-      <div>
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-semibold">Current Media</h3>
-          {!isReordering ? (
-            <Button onClick={startReordering} variant="outline">
-              Reorder Media
-            </Button>
-          ) : (
-            <div className="flex gap-2">
-              <Button onClick={saveReordering}>
-                Save Changes
-              </Button>
-              <Button onClick={cancelReordering} variant="outline">
-                Cancel
-              </Button>
-            </div>
-          )}
-        </div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {isReordering && <TableHead className="w-12"></TableHead>}
-              <TableHead>Preview</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Order</TableHead>
-              <TableHead>Visible</TableHead>
-              {!isReordering && <TableHead>Actions</TableHead>}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {displayMedia?.map((item, index) => (
-              <TableRow 
-                key={item.id}
-                draggable={isReordering}
-                onDragStart={() => handleDragStart(index)}
-                onDragOver={(e) => handleDragOver(e, index)}
-                onDragEnd={handleDragEnd}
-                className={isReordering ? "cursor-move" : ""}
-              >
-                {isReordering && (
-                  <TableCell>
-                    <GripVertical className="h-5 w-5 text-muted-foreground" />
-                  </TableCell>
-                )}
-                <TableCell>
-                  {item.type === "photo" ? (
-                    <img 
-                      src={item.storage_path} 
-                      alt="Media preview" 
-                      className="w-12 h-12 object-cover rounded"
-                    />
-                  ) : (
-                    <video 
-                      src={item.storage_path} 
-                      className="w-12 h-12 object-cover rounded"
-                      muted
-                    />
-                  )}
-                </TableCell>
-                <TableCell className="capitalize">{item.type}</TableCell>
-                <TableCell>{isReordering ? index : item.display_order}</TableCell>
-                <TableCell>{item.is_visible ? "Yes" : "No"}</TableCell>
-                {!isReordering && (
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <Button 
-                        size="icon" 
-                        variant="outline"
-                        onClick={() => handleEdit(item)}
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button 
-                        size="icon" 
-                        variant="destructive"
-                        onClick={() => handleDelete(item.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                )}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <Tabs defaultValue="all" onValueChange={(value) => {
+        if (value === "all") setMediaType(undefined);
+        else if (value === "video") setMediaType("video");
+        else if (value === "photo") setMediaType("photo");
+        setIsReordering(false);
+      }}>
+        <TabsList className="mb-4">
+          <TabsTrigger value="all">All Media</TabsTrigger>
+          <TabsTrigger value="video">Videos</TabsTrigger>
+          <TabsTrigger value="photo">Photos</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="all">
+          {renderMediaTable()}
+        </TabsContent>
+        
+        <TabsContent value="video">
+          {renderMediaTable()}
+        </TabsContent>
+        
+        <TabsContent value="photo">
+          {renderMediaTable()}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
