@@ -19,7 +19,7 @@ const MediaManager = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
-    type: "video" as "video" | "photo",
+    type: "photo" as "video" | "photo",
     storage_path: "",
     display_order: 0,
     is_visible: true,
@@ -27,7 +27,7 @@ const MediaManager = () => {
 
   const resetForm = () => {
     setFormData({
-      type: "video",
+      type: "photo",
       storage_path: "",
       display_order: 0,
       is_visible: true,
@@ -147,7 +147,7 @@ const MediaManager = () => {
             <Label htmlFor="type">Type</Label>
             <Select 
               value={formData.type} 
-              onValueChange={(value: "video" | "photo") => 
+              onValueChange={(value: "photo" | "video") =>
                 setFormData({ ...formData, type: value })
               }
             >
@@ -182,6 +182,7 @@ const MediaManager = () => {
             accept={formData.type === "video" ? "video/*" : "image/*"}
             onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
             required={!editingId}
+            className={'cursor-pointer'}
           />
           {editingId && (
             <p className="text-sm text-muted-foreground mt-1">
