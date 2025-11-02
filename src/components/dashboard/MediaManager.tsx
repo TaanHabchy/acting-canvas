@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMedia } from "@/hooks/useMedia";
+import { useMedia, Media } from "@/hooks/useMedia";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, GripVertical } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 const MediaManager = () => {
@@ -18,6 +18,9 @@ const MediaManager = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [isReordering, setIsReordering] = useState(false);
+  const [reorderedMedia, setReorderedMedia] = useState<Media[]>([]);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     type: "photo" as "video" | "photo",
     storage_path: "",
@@ -133,6 +136,64 @@ const MediaManager = () => {
     }
   };
 
+  const startReordering = () => {
+    setIsReordering(true);
+    setReorderedMedia([...(media || [])]);
+  };
+
+  const cancelReordering = () => {
+    setIsReordering(false);
+    setReorderedMedia([]);
+  };
+
+  const saveReordering = async () => {
+    try {
+      // Update display_order for all items
+      const updates = reorderedMedia.map((item, index) => 
+        supabase
+          .from("media")
+          .update({ display_order: index })
+          .eq("id", item.id)
+      );
+
+      await Promise.all(updates);
+      
+      toast({ title: "Order updated successfully" });
+      queryClient.invalidateQueries({ queryKey: ['media'] });
+      setIsReordering(false);
+      setReorderedMedia([]);
+    } catch (error: any) {
+      toast({ 
+        title: "Error", 
+        description: error.message,
+        variant: "destructive" 
+      });
+    }
+  };
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+
+    const newMedia = [...reorderedMedia];
+    const draggedItem = newMedia[draggedIndex];
+    newMedia.splice(draggedIndex, 1);
+    newMedia.splice(index, 0, draggedItem);
+    
+    setReorderedMedia(newMedia);
+    setDraggedIndex(index);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
+  };
+
+  const displayMedia = isReordering ? reorderedMedia : media;
+
   if (isLoading) return <p>Loading...</p>;
 
   return (
@@ -216,18 +277,49 @@ const MediaManager = () => {
       </form>
 
       <div>
-        <h3 className="text-xl font-semibold mb-4">Current Media</h3>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold">Current Media</h3>
+          {!isReordering ? (
+            <Button onClick={startReordering} variant="outline">
+              Reorder Media
+            </Button>
+          ) : (
+            <div className="flex gap-2">
+              <Button onClick={saveReordering}>
+                Save Changes
+              </Button>
+              <Button onClick={cancelReordering} variant="outline">
+                Cancel
+              </Button>
+            </div>
+          )}
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
+              {isReordering && <TableHead className="w-12"></TableHead>}
               <TableHead>Preview</TableHead>
+              <TableHead>Type</TableHead>
               <TableHead>Order</TableHead>
               <TableHead>Visible</TableHead>
+              {!isReordering && <TableHead>Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {media?.map((item) => (
-              <TableRow key={item.id}>
+            {displayMedia?.map((item, index) => (
+              <TableRow 
+                key={item.id}
+                draggable={isReordering}
+                onDragStart={() => handleDragStart(index)}
+                onDragOver={(e) => handleDragOver(e, index)}
+                onDragEnd={handleDragEnd}
+                className={isReordering ? "cursor-move" : ""}
+              >
+                {isReordering && (
+                  <TableCell>
+                    <GripVertical className="h-5 w-5 text-muted-foreground" />
+                  </TableCell>
+                )}
                 <TableCell>
                   {item.type === "photo" ? (
                     <img 
@@ -238,13 +330,34 @@ const MediaManager = () => {
                   ) : (
                     <video 
                       src={item.storage_path} 
-                      className="w-24 12 object-cover rounded"
+                      className="w-12 h-12 object-cover rounded"
                       muted
                     />
                   )}
                 </TableCell>
-                <TableCell>{item.display_order}</TableCell>
+                <TableCell className="capitalize">{item.type}</TableCell>
+                <TableCell>{isReordering ? index : item.display_order}</TableCell>
                 <TableCell>{item.is_visible ? "Yes" : "No"}</TableCell>
+                {!isReordering && (
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button 
+                        size="icon" 
+                        variant="outline"
+                        onClick={() => handleEdit(item)}
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button 
+                        size="icon" 
+                        variant="destructive"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>
