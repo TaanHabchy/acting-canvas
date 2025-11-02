@@ -7,7 +7,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <div className="h-screen snap-y snap-mandatory overflow-y-scroll">
+      <div className="h-screen snap-y snap-mandatory overflow-y-scroll overflow-hidden">
         {isLoading && (
           <div className="h-screen flex items-center justify-center">
             <p className="text-foreground/70">Loading videos...</p>

@@ -151,19 +151,24 @@ const MediaManager = () => {
   const saveReordering = async () => {
     try {
       // Update display_order for all items
-      const updates = reorderedMedia.map((item, index) => 
-        supabase
-          .from("media")
-          .update({ display_order: index })
-          .eq("id", item.id)
-      );
+      const updates = reorderedMedia.map(async (item, index) => {
+        const { error } = await supabase
+            .from("media")
+            .update({ display_order: index })
+            .eq("id", item.id)
+            .eq("type", item.type);
+
+        if (error) throw error;
+      });
 
       await Promise.all(updates);
-      
+
       toast({ title: "Order updated successfully" });
       queryClient.invalidateQueries({ queryKey: ['media'] });
       setIsReordering(false);
       setReorderedMedia([]);
+
+
     } catch (error: any) {
       toast({ 
         title: "Error", 
