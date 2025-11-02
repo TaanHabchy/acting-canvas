@@ -16,7 +16,7 @@ const MediaManager = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     type: "video" as "video" | "photo",
@@ -32,17 +32,17 @@ const MediaManager = () => {
       display_order: 0,
       is_visible: true,
     });
-    setSelectedFile(null);
+    setSelectedFiles([]);
     setEditingId(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!editingId && !selectedFile) {
+    if (!editingId && selectedFiles.length === 0) {
       toast({ 
         title: "Error", 
-        description: "Please select a file to upload",
+        description: "Please select at least one file to upload",
         variant: "destructive" 
       });
       return;
@@ -51,28 +51,28 @@ const MediaManager = () => {
     setUploading(true);
     
     try {
-      let storagePath = formData.storage_path;
-      
-      // Upload file if a new one is selected
-      if (selectedFile) {
-        const bucketName = formData.type === "video" ? "videos" : "photos";
-        const fileExt = selectedFile.name.split('.').pop();
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from(bucketName)
-          .upload(fileName, selectedFile);
-        
-        if (uploadError) throw uploadError;
-        
-        const { data: { publicUrl } } = supabase.storage
-          .from(bucketName)
-          .getPublicUrl(fileName);
-        
-        storagePath = publicUrl;
-      }
-      
       if (editingId) {
+        // Single file edit
+        let storagePath = formData.storage_path;
+        
+        if (selectedFiles.length > 0) {
+          const bucketName = formData.type === "video" ? "videos" : "photos";
+          const fileExt = selectedFiles[0].name.split('.').pop();
+          const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from(bucketName)
+            .upload(fileName, selectedFiles[0]);
+          
+          if (uploadError) throw uploadError;
+          
+          const { data: { publicUrl } } = supabase.storage
+            .from(bucketName)
+            .getPublicUrl(fileName);
+          
+          storagePath = publicUrl;
+        }
+        
         const { error } = await supabase
           .from("media")
           .update({ ...formData, storage_path: storagePath })
@@ -81,12 +81,43 @@ const MediaManager = () => {
         if (error) throw error;
         toast({ title: "Media updated successfully" });
       } else {
+        // Bulk upload - auto-assign display_order
+        const maxOrder = media?.reduce((max, item) => Math.max(max, item.display_order), -1) ?? -1;
+        const bucketName = formData.type === "video" ? "videos" : "photos";
+        
+        const mediaToInsert = [];
+        
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from(bucketName)
+            .upload(fileName, file);
+          
+          if (uploadError) throw uploadError;
+          
+          const { data: { publicUrl } } = supabase.storage
+            .from(bucketName)
+            .getPublicUrl(fileName);
+          
+          mediaToInsert.push({
+            type: formData.type,
+            storage_path: publicUrl,
+            display_order: maxOrder + i + 1,
+            is_visible: formData.is_visible,
+          });
+        }
+        
         const { error } = await supabase
           .from("media")
-          .insert([{ ...formData, storage_path: storagePath }]);
+          .insert(mediaToInsert);
         
         if (error) throw error;
-        toast({ title: "Media added successfully" });
+        toast({ 
+          title: `${selectedFiles.length} media item${selectedFiles.length > 1 ? 's' : ''} added successfully` 
+        });
       }
       
       queryClient.invalidateQueries({ queryKey: ['media'] });
@@ -175,17 +206,22 @@ const MediaManager = () => {
         </div>
 
         <div>
-          <Label htmlFor="file">Upload File</Label>
+          <Label htmlFor="file">Upload File{!editingId && 's'}</Label>
           <Input
             id="file"
             type="file"
             accept={formData.type === "video" ? "video/*" : "image/*"}
-            onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+            multiple={!editingId}
+            onChange={(e) => setSelectedFiles(Array.from(e.target.files || []))}
             required={!editingId}
           />
-          {editingId && (
+          {editingId ? (
             <p className="text-sm text-muted-foreground mt-1">
               Leave empty to keep current file
+            </p>
+          ) : selectedFiles.length > 0 && (
+            <p className="text-sm text-muted-foreground mt-1">
+              {selectedFiles.length} file{selectedFiles.length > 1 ? 's' : ''} selected
             </p>
           )}
         </div>
