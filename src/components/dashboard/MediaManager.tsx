@@ -221,10 +221,8 @@ const MediaManager = () => {
           <TableHeader>
             <TableRow>
               <TableHead>Preview</TableHead>
-              <TableHead>Type</TableHead>
               <TableHead>Order</TableHead>
               <TableHead>Visible</TableHead>
-              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -235,37 +233,18 @@ const MediaManager = () => {
                     <img 
                       src={item.storage_path} 
                       alt="Media preview" 
-                      className="w-24 h-24 object-cover rounded"
+                      className="w-12 h-12 object-cover rounded"
                     />
                   ) : (
                     <video 
                       src={item.storage_path} 
-                      className="w-24 h-24 object-cover rounded"
+                      className="w-24 12 object-cover rounded"
                       muted
                     />
                   )}
                 </TableCell>
-                <TableCell className="capitalize">{item.type}</TableCell>
                 <TableCell>{item.display_order}</TableCell>
                 <TableCell>{item.is_visible ? "Yes" : "No"}</TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <Button 
-                      size="icon" 
-                      variant="outline"
-                      onClick={() => handleEdit(item)}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button 
-                      size="icon" 
-                      variant="destructive"
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>
