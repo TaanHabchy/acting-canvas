@@ -155,7 +155,8 @@ const MediaManager = () => {
         const { error } = await supabase
             .from("media")
             .update({ display_order: index })
-            .eq("id", item.id);
+            .eq("id", item.id)
+            .eq("type", item.type);
 
         if (error) throw error;
       });
