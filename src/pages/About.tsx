@@ -13,7 +13,7 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="container mx-auto px-6 pt-24 pb-16">
-        <div className="max-w-4xl">
+        <div className="max-w-screen">
           <Card className="p-8 md:p-12">
             <div className="grid md:grid-cols-2 gap-12">
               <div className="flex items-center justify-center">
@@ -36,23 +36,22 @@ const About = () => {
               
               <div className="space-y-6">
                 <p className="text-lg text-foreground/90 leading-relaxed">
-                  Whats up! I'm a Dallas based actor, with a B.A. in Computer Science
+                  My name is Sharbel Habchy, I'm a Dallas based actor, with a B.A. in Computer Science
                   from the University of Dallas. I fell in love with acting back in highschool, where every student would have to
-                  perform in classical theatre. Although I never took it too seriously, I loved the process, and would always
-                  audition for the lead role.  Once in college, I didn't have the time for theatre though until my final semester, when I performed in The
+                  perform in classical theatre. In college, I didn't have the time for theatre though until my final semester, when I performed in The
                   Glory in the Flower.
                 </p>
                 
                 <p className="text-lg text-foreground/90 leading-relaxed">
                  I graduated this past May, and although I was extremely blessed to land a Software Engineering role with a team of truly amazing people.
-                 The little voice inside my head, telling me that my search wasn't over, kept getting louder. And eventually it got loud enough, where I
-                  decided to step down from my full-time salary, and instead try and pursue acting full time.
+                 The little voice inside my head, telling me that my search wasn't over, convinced me to step down from my full-time salary,
+                  and instead try and pursue acting full time. I'm hoping to not only grow as an actor, but also gain experience working behind the camera
+                  and see what that's like.
                 </p>
                 
                 <p className="text-lg text-foreground/90 leading-relaxed">
-                  Aside from acting, I am a practicing Maronite Catholic, and I know that at the end of the day, God's will shall be done.
-                  Honestly, what gets me most excited about entering the film world, is getting to encounter all the extremely creative and passionate
-                  people out there.
+                  Aside from acting, I am a practicing Maronite Catholic, so I try the best that I can to always put God first.
+                  I love reading novels, Anna Karenina being my favorite, and I've recently started playing pickleball with my roomates.
                 </p>
 
                 <div className="pt-6 border-t border-border">
