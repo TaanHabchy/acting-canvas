@@ -39,20 +39,26 @@ const About = () => {
                 <p className="text-lg text-foreground/90 leading-relaxed">
                   My name is Sharbel Habchy, I'm a Dallas based actor, with a B.A. in Computer Science
                   from the University of Dallas. I fell in love with acting back in highschool, where every student would have to
-                  perform in classical theatre. In college, I didn't have the time for theatre though until my final semester, when I performed in The
-                  Glory in the Flower.
+                  perform in classical theatre. In college, I didn't have the time for theatre though until my final semester, performing in
+                    <span className={'italic'}> The Glory in the Flower</span>.
                 </p>
                 
                 <p className="text-lg text-foreground/90 leading-relaxed">
-                 I graduated this past May, and although I was extremely blessed to land a Software Engineering role with a team of truly amazing people.
-                 The little voice inside my head, telling me that my search wasn't over, convinced me to step down from my full-time salary,
-                  and instead try and pursue acting full time. I'm hoping to not only grow as an actor, but also gain experience working behind the camera
-                  and see what that's like.
+                 I graduated this past May, and although I was extremely blessed to land a Software Engineering role with a team of great guys,
+                 the notion that life was more than work was always in the back of my mind,
+                    and ultimately I decided to drop the full-time salary.
+                 Now <span className={'italic'}>obviously</span> I hope that a career in acting works out,
+                    but I'm not <span className={'italic'}>that</span> stupid... I know that the odds are incredibly against me.
                 </p>
                 
                 <p className="text-lg text-foreground/90 leading-relaxed">
-                  Aside from acting, I am a practicing Maronite Catholic, so I try the best that I can to always put God first.
-                  I love reading novels, Anna Karenina being my favorite, and I've recently started playing pickleball with my roomates.
+                  Whether or not this dream works out, I trust that the pursuit of acting, in some mysterious way, is a pursuit of God,
+                    thus, that there's no need to worry. At the end of this journey, I just hope I can say, that I sought first the
+                    kingdom of God, knowing that all good things shall be given to me.
+                </p>
+
+              <p className="text-lg text-foreground/90 leading-relaxed">
+                  Aside from acting, I love reading novels, Anna Karenina being my favorite, and I've recently started playing pickleball with my roommates.
                 </p>
 
                <ContactInfo />

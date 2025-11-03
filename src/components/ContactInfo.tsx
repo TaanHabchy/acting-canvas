@@ -22,6 +22,7 @@ export default function ContactInfo() {
 
     return (
         <div className="space-y-2 text-foreground/80">
+            <div className="flex items-center justify-center w-full border-t-2 border-primary"></div>
             <p
                 className="cursor-pointer"
                 onClick={() => handleCopy("sharbelhabchy@gmail.com", "Email")}
