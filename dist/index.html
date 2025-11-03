@@ -20,11 +20,21 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/acting-canvas/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/acting-canvas/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="/acting-canvas/favicon_io/site.webmanifest">
-    <script type="module" crossorigin src="/acting-canvas/assets/index-InVbdGNZ.js"></script>
-    <link rel="stylesheet" crossorigin href="/acting-canvas/assets/index-BDkaeqmn.css">
+    <script type="module" crossorigin src="/acting-canvas/assets/index-DbecJxDQ.js"></script>
+    <link rel="stylesheet" crossorigin href="/acting-canvas/assets/index-B5EmpY00.css">
   </head>
 
   <body>
+    <script>
+      // GitHub Pages SPA redirect handling
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
     <div id="root"></div>
   </body>
 </html>
