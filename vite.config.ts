@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   // 👇 IMPORTANT: Set this to your repo name for GitHub Pages
-  base: mode === "development" ? "/" : "/acting-canvas/",
+  base: "/",
   plugins: [
     react(),
     mode === "development" && componentTagger(),
