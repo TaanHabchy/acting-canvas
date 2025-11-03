@@ -63,7 +63,6 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
           <video
               src={videoUrl}
               className="absolute inset-0 w-full h-full object-cover blur-3xl scale-110"
-              autoPlay
               loop
               muted
               playsInline
@@ -78,7 +77,7 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
               className="
   w-full h-auto
   sm:w-2/3 sm:h-2/3
-  object-cover rounded-lg cursor-pointer z-10
+  object-cover rounded-3xl cursor-pointer z-10
   transition-all
 "
 
