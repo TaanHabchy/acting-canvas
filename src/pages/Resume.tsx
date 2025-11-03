@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useExperience } from "@/hooks/useExperience";
 
 const Resume = () => {
@@ -72,9 +73,9 @@ const Resume = () => {
             {skillsLoading ? (
               <p className="text-foreground/70">Loading...</p>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="flex flex-wrap gap-2">
                 {skills?.map((skill) => (
-                  <div key={skill.id} className="text-foreground/80">• {skill.title}</div>
+                  <Badge key={skill.id} variant="secondary">{skill.title}</Badge>
                 ))}
               </div>
             )}
