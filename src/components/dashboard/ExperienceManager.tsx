@@ -20,7 +20,7 @@ const ExperienceManager = () => {
     studio: "",
     director: "",
     role: "",
-    type: "short_film" as "film" | "short_film" | "tv" | "commercial" | "theatre" | "training",
+    type: "short_film" as "film" | "short_film" | "tv" | "commercial" | "theatre" | "training" | "skill",
     display_order: 0,
   });
 
@@ -129,6 +129,7 @@ const ExperienceManager = () => {
                 <SelectItem value="commercial">Commercial</SelectItem>
                 <SelectItem value="theatre">Theatre</SelectItem>
                 <SelectItem value="training">Training</SelectItem>
+                <SelectItem value="skill">Skill</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -16,7 +16,7 @@ const Resume = () => {
 
         <div className="space-y-12 max-w-4xl">
           <Card className="p-8">
-            <h2 className="text-2xl font-bold mb-6 text-primary">Experience</h2>
+            <h2 className="text-2xl font-bold mb-6 text-foreground">Experience</h2>
             {experiencesLoading ? (
               <p className="text-foreground/70">Loading...</p>
             ) : (
@@ -30,7 +30,7 @@ const Resume = () => {
                         }, {} as Record<string, typeof experiences>)
                     ).map(([type, exps]) => (
                         <section key={type} className="mb-6">
-                          <h2 className="text-xl font-bold capitalize mb-3 text-foreground">
+                          <h2 className="text-xl font-bold capitalize mb-3 text-primary">
                             {type}
                           </h2>
                           {exps.map((exp) => (
@@ -53,14 +53,14 @@ const Resume = () => {
           </Card>
 
           <Card className="p-8">
-            <h2 className="text-2xl font-bold mb-6 text-primary">Training</h2>
+            <h2 className="text-2xl font-bold mb-6 text-foreground">Training</h2>
             {trainingLoading ? (
               <p className="text-foreground/70">Loading...</p>
             ) : (
               <div className="space-y-4">
                 {training?.map((item) => (
                   <div key={item.id}>
-                    <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
+                    <h3 className="text-xl font-semibold text-primary">{item.title}</h3>
                     <p className="text-muted-foreground">{item.director} • {item.studio}</p>
                   </div>
                 ))}
@@ -69,13 +69,13 @@ const Resume = () => {
           </Card>
 
           <Card className="p-8">
-            <h2 className="text-2xl font-bold mb-6 text-primary">Skills</h2>
+            <h2 className="text-2xl font-bold mb-6 text-foreground">Skills</h2>
             {skillsLoading ? (
               <p className="text-foreground/70">Loading...</p>
             ) : (
               <div className="flex flex-wrap gap-2">
                 {skills?.map((skill) => (
-                  <Badge key={skill.id} variant="secondary">{skill.title}</Badge>
+                  <Badge key={skill.id} variant="default" className={'text-foreground'}>{skill.title}</Badge>
                 ))}
               </div>
             )}
