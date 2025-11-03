@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { KanbanColumn } from "./KanbanColumn";
 import { PersonCard } from "./PersonCard";
+import { PersonDialog } from "./PersonDialog";
 import { usePeople, OutreachStatus, Person } from "@/hooks/usePeople";
 
 const COLUMNS: { status: OutreachStatus; title: string }[] = [
@@ -53,10 +54,13 @@ const ProgressTracker = () => {
           <h2 className="text-2xl font-bold">Outreach Tracker</h2>
           <p className="text-muted-foreground">Track who you've reached out to and their status</p>
         </div>
-        <Button onClick={() => refetch()} variant="outline" size="sm" disabled={isLoading}>
-          <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-          Refresh
-        </Button>
+        <div className="flex gap-2">
+          <PersonDialog />
+          <Button onClick={() => refetch()} variant="outline" size="sm" disabled={isLoading}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+        </div>
       </div>
 
       {isLoading ? (

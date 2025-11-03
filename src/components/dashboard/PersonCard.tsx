@@ -1,8 +1,10 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Card, CardContent } from "@/components/ui/card";
-import { GripVertical, Mail, Phone, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { GripVertical, Mail, Phone, Star, Pencil } from "lucide-react";
 import { Person } from "@/hooks/usePeople";
+import { PersonDialog } from "./PersonDialog";
 
 interface PersonCardProps {
   person: Person;
@@ -28,7 +30,7 @@ export const PersonCard = ({ person }: PersonCardProps) => {
     <Card 
       ref={setNodeRef} 
       style={style}
-      className="cursor-move hover:shadow-md transition-shadow"
+      className="group hover:shadow-md transition-shadow"
     >
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
@@ -45,12 +47,27 @@ export const PersonCard = ({ person }: PersonCardProps) => {
               <h3 className="font-semibold text-foreground truncate">
                 {person.name}
               </h3>
-              {person.rating !== null && person.rating !== undefined && person.rating > 0 && (
-                <div className="flex items-center gap-1 text-destructive flex-shrink-0">
-                  <Star className="h-4 w-4 fill-current" />
-                  <span className="text-sm font-medium">{person.rating}</span>
-                </div>
-              )}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {person.rating !== null && person.rating !== undefined && person.rating > 0 && (
+                  <div className="flex items-center gap-1 text-destructive">
+                    <Star className="h-4 w-4 fill-current" />
+                    <span className="text-sm font-medium">{person.rating}</span>
+                  </div>
+                )}
+                <PersonDialog 
+                  person={person} 
+                  trigger={
+                    <Button 
+                      size="icon" 
+                      variant="ghost" 
+                      className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Pencil className="h-3 w-3" />
+                    </Button>
+                  }
+                />
+              </div>
             </div>
             
             {person.company && (
