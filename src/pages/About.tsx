@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
 import { useMedia } from "@/hooks/useMedia";
 import { supabase } from "@/integrations/supabase/client";
+import ContactInfo from "@/components/ContactInfo.tsx";
 
 const About = () => {
   const { data: photos, isLoading } = useMedia('photo');
@@ -54,14 +55,7 @@ const About = () => {
                   I love reading novels, Anna Karenina being my favorite, and I've recently started playing pickleball with my roomates.
                 </p>
 
-                <div className="pt-6 border-t border-border">
-                  <h3 className="text-xl font-semibold mb-4 text-primary">Contact</h3>
-                  <div className="space-y-2 text-foreground/80">
-                    <p>Email: sharbelhabchy@gmail.com</p>
-                    <p>Phone: (978) 407-9564</p>
-                    <p>Location: Dallas, TX</p>
-                  </div>
-                </div>
+               <ContactInfo />
               </div>
             </div>
           </Card>
