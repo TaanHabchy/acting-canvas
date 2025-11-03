@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import MediaManager from "@/components/dashboard/MediaManager";
 import ExperienceManager from "@/components/dashboard/ExperienceManager";
+import ProgressTracker from "@/components/dashboard/ProgressTracker";
 
 const Dashboard = () => {
   return (
@@ -13,6 +14,7 @@ const Dashboard = () => {
           <TabsList className="mb-8">
             <TabsTrigger value="media">Media (Videos & Photos)</TabsTrigger>
             <TabsTrigger value="experience">Experience & Training</TabsTrigger>
+            <TabsTrigger value="progress">Progress Tracker</TabsTrigger>
           </TabsList>
           
           <TabsContent value="media">
@@ -24,6 +26,12 @@ const Dashboard = () => {
           <TabsContent value="experience">
             <Card className="p-6">
               <ExperienceManager />
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="progress">
+            <Card className="p-6">
+              <ProgressTracker />
             </Card>
           </TabsContent>
         </Tabs>
