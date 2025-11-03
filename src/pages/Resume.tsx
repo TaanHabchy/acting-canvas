@@ -12,8 +12,6 @@ const Resume = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="container mx-auto px-6 pt-24 pb-16">
-        <h1 className="text-5xl font-bold mb-12 text-foreground">Resume</h1>
-
         <div className="space-y-12 max-w-4xl">
           <Card className="p-8">
             <h2 className="text-2xl font-bold mb-6 text-foreground">Experience</h2>

@@ -75,8 +75,14 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
           <video
               ref={videoRef}
         src={videoUrl}
-        className="w-2/3 h-2/3 object-cover rounded-lg cursor-pointer z-10"
-        controls
+              className="
+  w-full h-auto
+  sm:w-2/3 sm:h-2/3
+  object-cover rounded-lg cursor-pointer z-10
+  transition-all
+"
+
+              controls
         playsInline
         preload="metadata"
         autoPlay={true}
