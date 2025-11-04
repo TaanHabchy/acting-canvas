@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import MediaManager from "@/components/dashboard/MediaManager";
 import ExperienceManager from "@/components/dashboard/ExperienceManager";
 import ProgressTracker from "@/components/dashboard/ProgressTracker";
+import StudiosTracker from "@/components/dashboard/StudiosTracker";
 import {ThemeToggle} from "@/components/ui/toggle_theme.tsx";
 
 const Dashboard = () => {
@@ -17,6 +18,7 @@ const Dashboard = () => {
             <TabsTrigger value="media">Media (Videos & Photos)</TabsTrigger>
             <TabsTrigger value="experience">Experience & Training</TabsTrigger>
             <TabsTrigger value="progress">People Tracker</TabsTrigger>
+            <TabsTrigger value="studios">Studios Tracker</TabsTrigger>
           </TabsList>
           
           <TabsContent value="media">
@@ -34,6 +36,12 @@ const Dashboard = () => {
           <TabsContent value="progress">
             <Card className="p-6">
               <ProgressTracker />
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="studios">
+            <Card className="p-6">
+              <StudiosTracker />
             </Card>
           </TabsContent>
         </Tabs>
