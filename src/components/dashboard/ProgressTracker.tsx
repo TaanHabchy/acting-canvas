@@ -21,6 +21,8 @@ const ProgressTracker = () => {
   const { data: people = [], isLoading, refetch, updateStatus } = usePeople();
   const [activePerson, setActivePerson] = useState<Person | null>(null);
   const [viewMode, setViewMode] = useState<'board' | 'table'>('board');
+  const [editingPerson, setEditingPerson] = useState<Person | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleDragStart = (event: DragStartEvent) => {
     const person = people.find(p => p.id === event.active.id);
@@ -98,6 +100,16 @@ const ProgressTracker = () => {
         </div>
       </div>
 
+      {editingPerson && (
+        <PersonDialog 
+          person={editingPerson}
+          open={true}
+          onOpenChange={(open) => {
+            if (!open) setEditingPerson(null);
+          }}
+        />
+      )}
+
       {isLoading ? (
         <div className="flex items-center justify-center h-64 text-muted-foreground">
           Loading...
@@ -125,20 +137,36 @@ const ProgressTracker = () => {
                 </TableRow>
               ) : (
                 people.map((person) => (
-                  <TableRow key={person.id}>
+                  <TableRow 
+                    key={person.id} 
+                    className="cursor-pointer"
+                    onClick={() => setEditingPerson(person)}
+                  >
                     <TableCell className="font-medium">{person.name}</TableCell>
                     <TableCell>{person.email || '-'}</TableCell>
                     <TableCell>{person.phone || '-'}</TableCell>
                     <TableCell>
                       {person.linkedin ? (
-                        <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        <a 
+                          href={person.linkedin} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-primary hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
                           Link
                         </a>
                       ) : '-'}
                     </TableCell>
                     <TableCell>
                       {person.facebook ? (
-                        <a href={person.facebook} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        <a 
+                          href={person.facebook} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-primary hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
                           Link
                         </a>
                       ) : '-'}

@@ -18,15 +18,20 @@ import { cn } from "@/lib/utils";
 interface PersonDialogProps {
   person?: Person;
   trigger?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
-  const [open, setOpen] = useState(false);
+export const PersonDialog = ({ person, trigger, open: controlledOpen, onOpenChange }: PersonDialogProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [studioOpen, setStudioOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const { data: studios = [] } = useStudios();
+  
+  const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
+  const setOpen = onOpenChange || setInternalOpen;
   
   const [formData, setFormData] = useState({
     name: "",
@@ -99,14 +104,16 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {trigger || (
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Person
-          </Button>
-        )}
-      </DialogTrigger>
+      {!controlledOpen && (
+        <DialogTrigger asChild>
+          {trigger || (
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              Add Person
+            </Button>
+          )}
+        </DialogTrigger>
+      )}
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{person ? "Edit Person" : "Add New Person"}</DialogTitle>

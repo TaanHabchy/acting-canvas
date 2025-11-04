@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -32,11 +32,11 @@ interface StudioDialogProps {
 
 export const StudioDialog = ({ studio, open, onOpenChange }: StudioDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState(studio?.name || "");
-  const [website, setWebsite] = useState(studio?.website || "");
-  const [facebook, setFacebook] = useState(studio?.facebook || "");
-  const [location, setLocation] = useState(studio?.location || "");
-  const [status, setStatus] = useState<StudioStatus>(studio?.status || "soon");
+  const [name, setName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [location, setLocation] = useState("");
+  const [status, setStatus] = useState<StudioStatus>("soon");
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const { toast } = useToast();
@@ -44,6 +44,17 @@ export const StudioDialog = ({ studio, open, onOpenChange }: StudioDialogProps) 
 
   const dialogOpen = open !== undefined ? open : isOpen;
   const setDialogOpen = onOpenChange || setIsOpen;
+
+  // Update form fields when studio changes
+  useEffect(() => {
+    if (studio) {
+      setName(studio.name || "");
+      setWebsite(studio.website || "");
+      setFacebook(studio.facebook || "");
+      setLocation(studio.location || "");
+      setStatus(studio.status || "soon");
+    }
+  }, [studio]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

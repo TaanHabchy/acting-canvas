@@ -21,6 +21,8 @@ const StudiosTracker = () => {
   const { data: studios = [], isLoading, refetch, updateStatus } = useStudios();
   const [activeStudio, setActiveStudio] = useState<Studio | null>(null);
   const [viewMode, setViewMode] = useState<'board' | 'table'>('board');
+  const [editingStudio, setEditingStudio] = useState<Studio | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleDragStart = (event: DragStartEvent) => {
     const studio = studios.find(s => s.id === event.active.id);
@@ -98,6 +100,17 @@ const StudiosTracker = () => {
         </div>
       </div>
 
+      {editingStudio && (
+        <StudioDialog 
+          studio={editingStudio} 
+          open={dialogOpen}
+          onOpenChange={(open) => {
+            setDialogOpen(open);
+            if (!open) setEditingStudio(null);
+          }}
+        />
+      )}
+
       {isLoading ? (
         <div className="flex items-center justify-center h-64 text-muted-foreground">
           Loading...
@@ -123,18 +136,37 @@ const StudiosTracker = () => {
                 </TableRow>
               ) : (
                 studios.map((studio) => (
-                  <TableRow key={studio.id}>
+                  <TableRow 
+                    key={studio.id}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setEditingStudio(studio);
+                      setDialogOpen(true);
+                    }}
+                  >
                     <TableCell className="font-medium">{studio.name}</TableCell>
                     <TableCell>
                       {studio.website ? (
-                        <a href={studio.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        <a 
+                          href={studio.website} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-primary hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
                           Link
                         </a>
                       ) : '-'}
                     </TableCell>
                     <TableCell>
                       {studio.facebook ? (
-                        <a href={studio.facebook} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        <a 
+                          href={studio.facebook} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-primary hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
                           Link
                         </a>
                       ) : '-'}
