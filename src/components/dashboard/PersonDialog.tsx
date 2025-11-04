@@ -5,11 +5,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
-import { Plus, Pencil } from "lucide-react";
+import { Plus, Pencil, Check, ChevronsUpDown } from "lucide-react";
 import { Person, OutreachStatus } from "@/hooks/usePeople";
+import { useStudios } from "@/hooks/useStudios";
+import { cn } from "@/lib/utils";
 
 interface PersonDialogProps {
   person?: Person;
@@ -19,8 +23,10 @@ interface PersonDialogProps {
 export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [studioOpen, setStudioOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { data: studios = [] } = useStudios();
   
   const [formData, setFormData] = useState({
     name: "",
@@ -114,15 +120,51 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="studio">studio</Label>
-              <Input
-                id="studio"
-                value={formData.studio}
-                onChange={(e) => setFormData({ ...formData, studio: e.target.value })}
-              />
-            </div>
+          <div>
+            <Label htmlFor="studio">Studio</Label>
+            <Popover open={studioOpen} onOpenChange={setStudioOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={studioOpen}
+                  className="w-full justify-between"
+                >
+                  {formData.studio
+                    ? studios.find((studio) => studio.id === formData.studio)?.name
+                    : "Select studio..."}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-full p-0">
+                <Command>
+                  <CommandInput placeholder="Search studios..." />
+                  <CommandList>
+                    <CommandEmpty>No studio found.</CommandEmpty>
+                    <CommandGroup>
+                      {studios.map((studio) => (
+                        <CommandItem
+                          key={studio.id}
+                          value={studio.name}
+                          onSelect={() => {
+                            setFormData({ ...formData, studio: studio.id });
+                            setStudioOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              formData.studio === studio.id ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {studio.name}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
