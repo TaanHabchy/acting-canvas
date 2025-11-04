@@ -33,11 +33,18 @@ const StudiosTracker = () => {
     }
 
     const studioId = active.id as number;
-    const newStatus = over.id as StudioStatus;
+    const newStatus = over.id as string;
+    
+    // Validate that we're dropping on a valid status column
+    const validStatuses = ['soon', 'contacted', 'conversation', 'ghosted', 'dub'];
+    if (!validStatuses.includes(newStatus)) {
+      setActiveStudio(null);
+      return;
+    }
     
     const studio = studios.find(s => s.id === studioId);
     if (studio && studio.status !== newStatus) {
-      updateStatus.mutate({ id: studioId, status: newStatus });
+      updateStatus.mutate({ id: studioId, status: newStatus as StudioStatus });
     }
     
     setActiveStudio(null);

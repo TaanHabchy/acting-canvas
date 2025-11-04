@@ -33,11 +33,18 @@ const ProgressTracker = () => {
     }
 
     const personId = active.id as string;
-    const newStatus = over.id as OutreachStatus;
+    const newStatus = over.id as string;
+    
+    // Validate that we're dropping on a valid status column
+    const validStatuses = ['soon', 'contacted', 'conversation', 'ghosted', 'dub'];
+    if (!validStatuses.includes(newStatus)) {
+      setActivePerson(null);
+      return;
+    }
     
     const person = people.find(p => p.id === personId);
     if (person && person.status !== newStatus) {
-      updateStatus.mutate({ id: personId, status: newStatus });
+      updateStatus.mutate({ id: personId, status: newStatus as OutreachStatus });
     }
     
     setActivePerson(null);
