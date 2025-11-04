@@ -1,5 +1,4 @@
 import { useDroppable } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { StudioCard } from "./StudioCard";
@@ -26,11 +25,9 @@ export const StudioKanbanColumn = ({ title, status, studios, count }: StudioKanb
         </div>
       </CardHeader>
       <CardContent ref={setNodeRef} className="space-y-2 min-h-[200px]">
-        <SortableContext items={studios.map(s => s.id)} strategy={verticalListSortingStrategy}>
-          {studios.map((studio) => (
-            <StudioCard key={studio.id} studio={studio} />
-          ))}
-        </SortableContext>
+        {studios.map((studio) => (
+          <StudioCard key={studio.id} studio={studio} />
+        ))}
       </CardContent>
     </Card>
   );
