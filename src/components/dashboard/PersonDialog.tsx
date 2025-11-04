@@ -32,6 +32,8 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
     name: "",
     studio: null,
     email: "",
+    linkedin: "",
+    facebook: "",
     status: "soon" as OutreachStatus,
   });
 
@@ -41,6 +43,8 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
         name: person.name,
         studio: person.studio || "",
         email: person.email || "",
+        linkedin: person.linkedin || "",
+        facebook: person.facebook || "",
         status: person.status,
       });
     }
@@ -51,6 +55,8 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
       name: "",
       studio: null,
       email: "",
+      linkedin: "",
+      facebook: "",
       status: "soon",
     });
   };
@@ -178,6 +184,27 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
               />
             </div>
 
+            <div>
+              <Label htmlFor="linkedin">LinkedIn</Label>
+              <Input
+                id="linkedin"
+                type="url"
+                placeholder="https://linkedin.com/in/..."
+                value={formData.linkedin}
+                onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div>
+            <Label htmlFor="facebook">Facebook</Label>
+            <Input
+              id="facebook"
+              type="url"
+              placeholder="https://facebook.com/..."
+              value={formData.facebook}
+              onChange={(e) => setFormData({ ...formData, facebook: e.target.value })}
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
