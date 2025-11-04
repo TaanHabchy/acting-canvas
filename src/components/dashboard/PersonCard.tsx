@@ -30,7 +30,7 @@ export const PersonCard = ({ person }: PersonCardProps) => {
     <Card 
       ref={setNodeRef} 
       style={style}
-      className="group hover:shadow-md transition-shadow"
+      className="group hover:shadow-md transition-shadow w-full"
     >
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
@@ -44,17 +44,11 @@ export const PersonCard = ({ person }: PersonCardProps) => {
           
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
-              <h3 className="font-semibold text-foreground truncate">
+              <p className="text-sm font-semibold text-foreground">
                 {person.name}
-              </h3>
+              </p>
               <div className="flex items-center gap-2 flex-shrink-0">
-                {person.rating !== null && person.rating !== undefined && person.rating > 0 && (
-                  <div className="flex items-center gap-1 text-destructive">
-                    <Star className="h-4 w-4 fill-current" />
-                    <span className="text-sm font-medium">{person.rating}</span>
-                  </div>
-                )}
-                <PersonDialog 
+                <PersonDialog
                   person={person} 
                   trigger={
                     <Button 
@@ -69,13 +63,7 @@ export const PersonCard = ({ person }: PersonCardProps) => {
                 />
               </div>
             </div>
-            
-            {person.company && (
-              <p className="text-sm text-muted-foreground truncate mt-1">
-                {person.position ? `${person.position} at ` : ''}{person.company}
-              </p>
-            )}
-            
+
             <div className="flex flex-col gap-1 mt-2">
               {person.email && (
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -90,12 +78,6 @@ export const PersonCard = ({ person }: PersonCardProps) => {
                 </div>
               )}
             </div>
-            
-            {person.notes && (
-              <p className="text-xs text-muted-foreground mt-2 line-clamp-2">
-                {person.notes}
-              </p>
-            )}
           </div>
         </div>
       </CardContent>
