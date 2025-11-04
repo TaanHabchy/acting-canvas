@@ -24,28 +24,18 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
   
   const [formData, setFormData] = useState({
     name: "",
-    company: "",
-    position: "",
+    studio: null,
     email: "",
-    phone: "",
-    notes: "",
-    outreach_status: "soon" as OutreachStatus,
-    rating: 0,
-    is_visible: true,
+    status: "soon" as OutreachStatus,
   });
 
   useEffect(() => {
     if (person) {
       setFormData({
         name: person.name,
-        company: person.company || "",
-        position: person.position || "",
+        studio: person.studio || "",
         email: person.email || "",
-        phone: person.phone || "",
-        notes: person.notes || "",
-        outreach_status: person.outreach_status,
-        rating: person.rating || 0,
-        is_visible: person.is_visible,
+        status: person.status,
       });
     }
   }, [person, open]);
@@ -53,14 +43,9 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
   const resetForm = () => {
     setFormData({
       name: "",
-      company: "",
-      position: "",
+      studio: null,
       email: "",
-      phone: "",
-      notes: "",
-      outreach_status: "soon",
-      rating: 0,
-      is_visible: true,
+      status: "soon",
     });
   };
 
@@ -131,20 +116,11 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="company">Company</Label>
+              <Label htmlFor="studio">studio</Label>
               <Input
-                id="company"
-                value={formData.company}
-                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="position">Position</Label>
-              <Input
-                id="position"
-                value={formData.position}
-                onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+                id="studio"
+                value={formData.studio}
+                onChange={(e) => setFormData({ ...formData, studio: e.target.value })}
               />
             </div>
           </div>
@@ -160,24 +136,15 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
               />
             </div>
 
-            <div>
-              <Label htmlFor="phone">Phone</Label>
-              <Input
-                id="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              />
-            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="status">Outreach Status</Label>
               <Select
-                value={formData.outreach_status}
+                value={formData.status}
                 onValueChange={(value: OutreachStatus) =>
-                  setFormData({ ...formData, outreach_status: value })
+                  setFormData({ ...formData, status: value })
                 }
               >
                 <SelectTrigger>
@@ -193,37 +160,6 @@ export const PersonDialog = ({ person, trigger }: PersonDialogProps) => {
               </Select>
             </div>
 
-            <div>
-              <Label htmlFor="rating">Rating (0-10)</Label>
-              <Input
-                id="rating"
-                type="number"
-                min="0"
-                max="10"
-                value={formData.rating}
-                onChange={(e) => setFormData({ ...formData, rating: parseInt(e.target.value) || 0 })}
-              />
-            </div>
-          </div>
-
-          <div>
-            <Label htmlFor="notes">Notes</Label>
-            <Textarea
-              id="notes"
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              rows={4}
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="is_visible"
-              checked={formData.is_visible}
-              onChange={(e) => setFormData({ ...formData, is_visible: e.target.checked })}
-            />
-            <Label htmlFor="is_visible">Visible</Label>
           </div>
 
           <div className="flex justify-end gap-2 pt-4">

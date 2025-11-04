@@ -8,14 +8,13 @@ export interface Person {
   id: string;
   created_at: string;
   name: string;
-  company?: string | null;
-  position?: string | null;
   email?: string | null;
+  linkedin?: string | null;
+  facebook?: string | null;
+  status: OutreachStatus;
+  location?: string | null;
+  studio?: number | null;
   phone?: string | null;
-  notes?: string | null;
-  outreach_status: OutreachStatus;
-  is_visible: boolean;
-  rating?: number | null;
 }
 
 export const usePeople = () => {
@@ -39,7 +38,7 @@ export const usePeople = () => {
     mutationFn: async ({ id, status }: { id: string; status: OutreachStatus }) => {
       const { error } = await supabase
         .from('people')
-        .update({ outreach_status: status })
+        .update({ status: status })
         .eq('id', id);
 
       if (error) throw error;

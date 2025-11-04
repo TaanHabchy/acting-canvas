@@ -36,7 +36,7 @@ const ProgressTracker = () => {
     const newStatus = over.id as OutreachStatus;
     
     const person = people.find(p => p.id === personId);
-    if (person && person.outreach_status !== newStatus) {
+    if (person && person.status !== newStatus) {
       updateStatus.mutate({ id: personId, status: newStatus });
     }
     
@@ -44,16 +44,12 @@ const ProgressTracker = () => {
   };
 
   const getPeopleByStatus = (status: OutreachStatus) => {
-    return people.filter(p => p.outreach_status === status);
+    return people.filter(p => p.status === status);
   };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold">Outreach Tracker</h2>
-          <p className="text-muted-foreground">Track who you've reached out to and their status</p>
-        </div>
         <div className="flex gap-2">
           <PersonDialog />
           <Button onClick={() => refetch()} variant="outline" size="sm" disabled={isLoading}>
