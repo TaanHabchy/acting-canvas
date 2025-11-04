@@ -1,11 +1,13 @@
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, closestCorners } from '@dnd-kit/core';
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, LayoutGrid, Table as TableIcon } from "lucide-react";
 import { KanbanColumn } from "./KanbanColumn";
 import { PersonCard } from "./PersonCard";
 import { PersonDialog } from "./PersonDialog";
 import { usePeople, OutreachStatus, Person } from "@/hooks/usePeople";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 const COLUMNS: { status: OutreachStatus; title: string }[] = [
   { status: 'soon', title: 'Soon' },
@@ -18,6 +20,7 @@ const COLUMNS: { status: OutreachStatus; title: string }[] = [
 const ProgressTracker = () => {
   const { data: people = [], isLoading, refetch, updateStatus } = usePeople();
   const [activePerson, setActivePerson] = useState<Person | null>(null);
+  const [viewMode, setViewMode] = useState<'board' | 'table'>('board');
 
   const handleDragStart = (event: DragStartEvent) => {
     const person = people.find(p => p.id === event.active.id);
@@ -54,6 +57,17 @@ const ProgressTracker = () => {
     return people.filter(p => p.status === status);
   };
 
+  const getStatusBadge = (status: OutreachStatus) => {
+    const variants: Record<OutreachStatus, string> = {
+      soon: 'secondary',
+      contacted: 'default',
+      conversation: 'default',
+      ghosted: 'destructive',
+      dub: 'default'
+    };
+    return <Badge variant={variants[status] as any}>{status}</Badge>;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -64,11 +78,78 @@ const ProgressTracker = () => {
             Refresh
           </Button>
         </div>
+        <div className="flex gap-2">
+          <Button 
+            onClick={() => setViewMode('board')} 
+            variant={viewMode === 'board' ? 'default' : 'outline'}
+            size="sm"
+          >
+            <LayoutGrid className="h-4 w-4 mr-2" />
+            Board
+          </Button>
+          <Button 
+            onClick={() => setViewMode('table')} 
+            variant={viewMode === 'table' ? 'default' : 'outline'}
+            size="sm"
+          >
+            <TableIcon className="h-4 w-4 mr-2" />
+            Table
+          </Button>
+        </div>
       </div>
 
       {isLoading ? (
         <div className="flex items-center justify-center h-64 text-muted-foreground">
           Loading...
+        </div>
+      ) : viewMode === 'table' ? (
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>LinkedIn</TableHead>
+                <TableHead>Facebook</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {people.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center text-muted-foreground">
+                    No people found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                people.map((person) => (
+                  <TableRow key={person.id}>
+                    <TableCell className="font-medium">{person.name}</TableCell>
+                    <TableCell>{person.email || '-'}</TableCell>
+                    <TableCell>{person.phone || '-'}</TableCell>
+                    <TableCell>
+                      {person.linkedin ? (
+                        <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                          Link
+                        </a>
+                      ) : '-'}
+                    </TableCell>
+                    <TableCell>
+                      {person.facebook ? (
+                        <a href={person.facebook} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                          Link
+                        </a>
+                      ) : '-'}
+                    </TableCell>
+                    <TableCell>{person.location || '-'}</TableCell>
+                    <TableCell>{getStatusBadge(person.status)}</TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
         </div>
       ) : (
         <DndContext
