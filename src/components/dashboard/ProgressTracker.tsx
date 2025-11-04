@@ -125,13 +125,14 @@ const ProgressTracker = () => {
                 <TableHead>LinkedIn</TableHead>
                 <TableHead>Facebook</TableHead>
                 <TableHead>Location</TableHead>
+                <TableHead>Tags</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {people.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center text-muted-foreground">
+                  <TableCell colSpan={8} className="text-center text-muted-foreground">
                     No people found
                   </TableCell>
                 </TableRow>
@@ -172,6 +173,7 @@ const ProgressTracker = () => {
                       ) : '-'}
                     </TableCell>
                     <TableCell>{person.location || '-'}</TableCell>
+                    <TableCell>{person.tags || '-'}</TableCell>
                     <TableCell>{getStatusBadge(person.status)}</TableCell>
                   </TableRow>
                 ))
