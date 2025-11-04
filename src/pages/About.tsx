@@ -23,8 +23,8 @@ const About = () => {
                     <span className="text-muted-foreground">Loading...</span>
                   </div>
                 ) : headshotUrl ? (
-                  <img 
-                    src={headshotUrl} 
+                  <img
+                    src={'/headshot.jpeg'}
                     alt="Headshot" 
                     className="w-96 h-104 rounded-lg object-cover"
                   />
@@ -38,8 +38,8 @@ const About = () => {
               <div className="space-y-6">
                 <p className="text-lg text-foreground/90 leading-relaxed">
                   My name is Sharbel Habchy, I'm a Dallas based actor, with a B.A. in Computer Science
-                  from the University of Dallas. I fell in love with acting back in highschool, where every student would have to
-                  perform in classical theatre. In college, I didn't have the time for theatre though until my final semester, performing in
+                  from the University of Dallas. I fell in love with acting in highschool, where I performed in classical theatre.
+                    In college I didn't have time for theatre until my final semester, performing in
                     <span className={'italic'}> The Glory in the Flower</span>.
                 </p>
                 
@@ -52,13 +52,12 @@ const About = () => {
                 </p>
                 
                 <p className="text-lg text-foreground/90 leading-relaxed">
-                  Whether or not this dream works out, I trust that the pursuit of acting, in some mysterious way, is a pursuit of God,
-                    thus, that there's no need to worry. At the end of this journey, I just hope I can say, that I sought first the
-                    kingdom of God, knowing that all good things shall be given to me.
+                  Whether or not I can make a career out of acting, I trust that all will work out.
+                    At the end of this journey, I just hope I can say that I truly came to know myself.
                 </p>
 
               <p className="text-lg text-foreground/90 leading-relaxed">
-                  Aside from acting, I love reading novels, Anna Karenina being my favorite, and I've recently started playing pickleball with my roommates.
+                  I would love to work with you, whether it be lead, extra, or even behind the camera, such as a PA!
                 </p>
 
                <ContactInfo />
