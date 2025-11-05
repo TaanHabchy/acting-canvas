@@ -240,6 +240,7 @@ export const PersonDialog = ({ person, trigger, open: controlledOpen, onOpenChan
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="not now">Not Now</SelectItem>
                   <SelectItem value="soon">Soon</SelectItem>
                   <SelectItem value="contacted">Contacted</SelectItem>
                   <SelectItem value="conversation">Conversation</SelectItem>
