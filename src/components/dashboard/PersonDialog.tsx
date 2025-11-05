@@ -40,17 +40,19 @@ export const PersonDialog = ({ person, trigger, open: controlledOpen, onOpenChan
     linkedin: "",
     facebook: "",
     status: "soon" as OutreachStatus,
+    notes: "",
   });
 
   useEffect(() => {
     if (person) {
       setFormData({
         name: person.name,
-        studio: person.studio || "",
+        studio: person.studio || null,
         email: person.email || "",
         linkedin: person.linkedin || "",
         facebook: person.facebook || "",
         status: person.status,
+        notes: person.notes || "",
       });
     }
   }, [person, open]);
@@ -63,6 +65,7 @@ export const PersonDialog = ({ person, trigger, open: controlledOpen, onOpenChan
       linkedin: "",
       facebook: "",
       status: "soon",
+      notes: "",
     });
   };
 
@@ -211,6 +214,16 @@ export const PersonDialog = ({ person, trigger, open: controlledOpen, onOpenChan
               placeholder="https://facebook.com/..."
               value={formData.facebook}
               onChange={(e) => setFormData({ ...formData, facebook: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="notes">Notes</Label>
+            <Input
+              id="notes"
+              placeholder="Anthing at all..."
+              value={formData.notes}
+              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
             />
           </div>
 

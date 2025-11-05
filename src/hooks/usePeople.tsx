@@ -16,6 +16,7 @@ export interface Person {
   studio?: number | null;
   phone?: string | null;
   tags?: string | null;
+  notes?: string | null;
 }
 
 export const usePeople = () => {

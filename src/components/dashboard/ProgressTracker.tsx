@@ -126,6 +126,7 @@ const ProgressTracker = () => {
                 <TableHead>Facebook</TableHead>
                 <TableHead>Location</TableHead>
                 <TableHead>Tags</TableHead>
+                <TableHead>Notes</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -174,6 +175,7 @@ const ProgressTracker = () => {
                     </TableCell>
                     <TableCell>{person.location || '-'}</TableCell>
                     <TableCell>{person.tags || '-'}</TableCell>
+                    <TableCell>{person.notes || '-'}</TableCell>
                     <TableCell>{getStatusBadge(person.status)}</TableCell>
                   </TableRow>
                 ))
