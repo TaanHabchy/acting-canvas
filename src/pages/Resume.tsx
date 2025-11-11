@@ -67,6 +67,29 @@ const Resume = () => {
           </Card>
 
           <Card className="p-8">
+            <h2 className="text-2xl font-bold mb-6 text-foreground">Relevant Work Experience</h2>
+            {skillsLoading ? (
+              <p className="text-foreground/70">Loading...</p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                <div>
+                  <h3 className="text-xl text-foreground"><strong className={'text-primary'}>Verso Jobs</strong> • Chief Technology Officer</h3>
+                  <p className="text-muted-foreground">Built the iOS/browser app Wayfinder, as well as an affiliate program</p>
+                  <p className="text-muted-foreground">Created an AI grading system to speed up the hiring process </p>
+
+                  <h3 className="text-xl text-foreground pt-4"><strong className={'text-primary'}>Autopilot</strong> • Full Stack Engineer</h3>
+                  <p className="text-muted-foreground">Developing jest TS tests, to improve the security and reliability of Autopilot’s backend</p>
+                  <p className="text-muted-foreground">Created and designed a customer support portal so that our reps could see and fix any customer’s issues</p>
+
+                  <h3 className="text-xl text-foreground pt-4"><strong className={'text-primary'}>St. Rita's Catholic School</strong> • After School Caretaker</h3>
+                  <p className="text-muted-foreground">Mentored and watched over children between 1st grade - 7th</p>
+                  <p className="text-muted-foreground">Gained experience in being an all-time QB, negotiating and distribution of time on the merry-go-round, and sharing of snacks</p>
+                </div>
+              </div>
+            )}
+          </Card>
+
+          <Card className="p-8">
             <h2 className="text-2xl font-bold mb-6 text-foreground">Skills</h2>
             {skillsLoading ? (
               <p className="text-foreground/70">Loading...</p>
@@ -78,6 +101,7 @@ const Resume = () => {
               </div>
             )}
           </Card>
+
         </div>
       </main>
     </div>

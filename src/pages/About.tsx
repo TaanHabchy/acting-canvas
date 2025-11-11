@@ -62,22 +62,22 @@ const About = () => {
         </div>
 
         {portfolioPhotos.length > 0 && (
-            <div className="mt-16 px-16">
-              <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
-                {portfolioPhotos.map((photo) => (
-                    <div
-                        key={photo.id}
-                        className="mb-6 break-inside-avoid overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-                    >
-                      <img
-                          src={photo.storage_path}
-                          alt="Portfolio photo"
-                          className="w-full h-auto object-cover hover:scale-[1.03] transition-transform duration-300"
-                          loading="lazy"
-                      />
-                    </div>
-                ))}
-              </div>
+            <div className="mt-16 px-2 sm:px-16">
+                <div className="columns-2 sm:columns-2 lg:columns-3 gap-3 sm:gap-6 [column-fill:_balance] px-2 sm:px-6">
+                    {portfolioPhotos.map((photo) => (
+                        <div
+                            key={photo.id}
+                            className="mb-6 break-inside-avoid overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        >
+                            <img
+                                src={photo.storage_path}
+                                alt="Portfolio photo"
+                                className="w-full h-auto object-cover hover:scale-[1.03] transition-transform duration-300 mx-auto block max-w-full sm:max-w-none"
+                                loading="lazy"
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
         )}
       </main>
