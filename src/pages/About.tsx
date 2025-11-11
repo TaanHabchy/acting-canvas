@@ -55,11 +55,6 @@ const About = () => {
                   Whether or not I can make a career out of acting, I trust that all will work out.
                     At the end of this journey, I just hope I can say that I truly came to know myself.
                 </p>
-
-              <p className="text-lg text-foreground/90 leading-relaxed">
-                  I would love to work with you, whether it be lead, extra, or even behind the camera, such as a PA!
-                </p>
-
                <ContactInfo />
               </div>
             </div>
