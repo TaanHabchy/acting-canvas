@@ -96,7 +96,7 @@ const Resume = () => {
             ) : (
               <div className="flex flex-wrap gap-2">
                 {skills?.map((skill) => (
-                  <Badge key={skill.id} variant="default" className={'text-foreground'}>{skill.title}</Badge>
+                  <Badge key={skill.id} variant="default" className={'text-white'}>{skill.title}</Badge>
                 ))}
               </div>
             )}

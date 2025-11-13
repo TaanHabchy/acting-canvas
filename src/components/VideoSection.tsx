@@ -69,7 +69,7 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
           />
 
           {/* Gradient overlay for contrast */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
 
           <video
               ref={videoRef}

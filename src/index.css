@@ -41,7 +41,7 @@
   }
 
   /* 🌞 Light mode overrides */
-  [data-theme="light"] {
+  :root.light {
     --background: 0 0% 98%;
     --foreground: 0 0% 10%;
 
