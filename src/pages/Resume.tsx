@@ -6,7 +6,6 @@ import { useExperience } from "@/hooks/useExperience";
 const Resume = () => {
   const { data: experiences, isLoading: experiencesLoading } = useExperience(['short film', 'theatre', 'tv']);
   const { data: training, isLoading: trainingLoading } = useExperience(['training']);
-  const { data: skills, isLoading: skillsLoading } = useExperience(['skill']);
 
   return (
     <div className="min-h-screen bg-background">
@@ -68,9 +67,6 @@ const Resume = () => {
 
           <Card className="p-8">
             <h2 className="text-2xl font-bold mb-6 text-foreground">Relevant Work Experience</h2>
-            {skillsLoading ? (
-              <p className="text-foreground/70">Loading...</p>
-            ) : (
               <div className="flex flex-wrap gap-2">
                 <div>
                   <h3 className="text-xl text-foreground"><strong className={'text-primary'}>Verso Jobs</strong> • Chief Technology Officer</h3>
@@ -86,22 +82,7 @@ const Resume = () => {
                   <p className="text-muted-foreground">Gained experience in being an all-time QB, negotiating and distribution of time on the merry-go-round, and sharing of snacks</p>
                 </div>
               </div>
-            )}
           </Card>
-
-          <Card className="p-8">
-            <h2 className="text-2xl font-bold mb-6 text-foreground">Skills</h2>
-            {skillsLoading ? (
-              <p className="text-foreground/70">Loading...</p>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {skills?.map((skill) => (
-                  <Badge key={skill.id} variant="default" className={'text-white'}>{skill.title}</Badge>
-                ))}
-              </div>
-            )}
-          </Card>
-
         </div>
       </main>
     </div>
