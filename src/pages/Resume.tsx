@@ -10,9 +10,9 @@ const Resume = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="container mx-auto px-6 pt-24 pb-16">
-        <div className="space-y-12 max-w-4xl">
-          <Card className="p-8">
+      <main className="container mx-auto px-56 pt-24 pb-16">
+        <div className="flex flex-col items-center justify-center space-y-12">
+          <Card className="p-8 w-full">
             <h2 className="text-2xl font-bold mb-6 text-foreground">Experience</h2>
             {experiencesLoading ? (
               <p className="text-foreground/70">Loading...</p>
@@ -47,9 +47,9 @@ const Resume = () => {
 
               </div>
             )}
-          </Card>
+          </Card >
 
-          <Card className="p-8">
+          <Card className="p-8 w-full">
             <h2 className="text-2xl font-bold mb-6 text-foreground">Training</h2>
             {trainingLoading ? (
               <p className="text-foreground/70">Loading...</p>
@@ -65,7 +65,18 @@ const Resume = () => {
             )}
           </Card>
 
-          <Card className="p-8">
+          <Card className="p-8 w-full">
+            <h2 className="text-2xl font-bold mb-6 text-foreground">Crew Experience</h2>
+              <div className="flex flex-wrap gap-2">
+                <div>
+                  <h3 className="text-xl text-foreground"><strong className={'text-primary'}>Gifted Dreamers Productions</strong> • Production Assistant</h3>
+                  <p className="text-muted-foreground">Slated every run, operated the boom when necessary, and helped setup lights for most scenes</p>
+                  <p className="text-muted-foreground">Contacted local shops to request permission to shoot, then worked as crowd control so our recordings went uninterrupted</p>
+                </div>
+              </div>
+          </Card>
+
+          <Card className="p-8 w-ful">
             <h2 className="text-2xl font-bold mb-6 text-foreground">Relevant Work Experience</h2>
               <div className="flex flex-wrap gap-2">
                 <div>

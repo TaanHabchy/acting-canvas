@@ -77,7 +77,8 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
               className="
   w-full h-auto
   sm:w-2/3 sm:h-2/3
-  object-cover rounded-3xl cursor-pointer z-10
+  object-cover cursor-pointer z-10
+  md:rounded-3xl
   transition-all
 "
 
