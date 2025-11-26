@@ -10,7 +10,7 @@ const Resume = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="container mx-auto px-4 px-6 md:px-12 pt-24 pb-16">
+      <main className="container mx-auto px-4 px-6 md:px-56 pt-24 pb-16">
         <div className="flex flex-col items-center justify-center space-y-12">
           <Card className="p-8 w-full">
             <h2 className="text-2xl font-bold mb-6 text-foreground">Experience</h2>

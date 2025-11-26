@@ -15,7 +15,7 @@ const About = () => {
       <Navigation />
       <main className="container mx-auto px-6 pt-24 pb-16">
         <div className="max-w-screen">
-          <Card className="p-8 md:p-12">
+          <Card className="p-8 md:mx-56">
             <div className="grid md:grid-cols-2 gap-12">
               <div className="flex items-center justify-center">
                 {isLoading ? (
