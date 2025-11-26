@@ -63,7 +63,7 @@ const About = () => {
 
         {portfolioPhotos.length > 0 && (
             <div className="mt-16 px-2 sm:px-16">
-                <div className="columns-2c md:columns-3 [column-fill:_balance] px-2 sm:px-6">
+                <div className="columns-2 md:columns-3 [column-fill:_balance] px-2 sm:px-6">
                     {portfolioPhotos.map((photo) => (
                         <div
                             key={photo.id}
