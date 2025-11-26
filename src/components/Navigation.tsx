@@ -5,9 +5,9 @@ const Navigation = () => {
   const location = useLocation();
 
   const links = [
-    { to: "/", label: "Reel" },
+    { to: "/reel", label: "Reel" },
+    { to: "/", label: "About" },
     { to: "/resume", label: "Resume" },
-    { to: "/about", label: "About" },
   ];
 
   return (
