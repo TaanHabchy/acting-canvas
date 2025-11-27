@@ -58,7 +58,7 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
     return (
       <section
           ref={sectionRef}
-          className="relative h-screen w-full snap-start flex items-center justify-center overflow-hidden">
+          className="flex flex-col relative h-screen w-full snap-start flex items-center justify-center overflow-hidden">
           {/* Blurred background layer */}
           <video
               src={videoUrl}
@@ -88,6 +88,12 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
         autoPlay={true}
               muted={true}
       />
+          {videoUrl === "https://areehownnoqwhzunofay.supabase.co/storage/v1/object/public/videos/greek-3.mp4" && (
+              <p
+                  className="absolute bottom-6 text-white/70 text-xs tracking-wide animate-fade-in
+                             opacity-0">
+                  Scroll down for more
+          </p>)}
     </section>
   );
 };
