@@ -56,46 +56,55 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
     }, []);
 
     return (
-      <section
-          ref={sectionRef}
-          className="flex flex-col relative h-screen w-full snap-start flex items-center justify-center overflow-hidden">
-          {/* Blurred background layer */}
-          <video
-              src={videoUrl}
-              className="absolute inset-0 w-full h-full object-cover blur-3xl scale-110"
-              loop
-              muted
-              playsInline
-          />
+        <section
+            ref={sectionRef}
+            className="relative h-screen w-full snap-start overflow-hidden flex items-center justify-center"
+        >
+            {/* blurred background video */}
+            <video
+                src={videoUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="
+      absolute inset-0
+      w-full h-full
+      object-cover
+      scale-125
+      blur-3xl
+      pointer-events-none
+    "
+            />
 
-          {/* Gradient overlay for contrast */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+            {/* foreground video (interactive) */}
+            <video
+                src={videoUrl}
+                controls
+                autoPlay
+                muted
+                playsInline
+                preload="metadata"
+                className="
+      relative z-10
+      w-full
+      sm:w-2/3
+      md:rounded-3xl
+      shadow-xl
+    "
+            />
 
-          <video
-              ref={videoRef}
-        src={videoUrl}
-              className="
-  w-full h-auto
-  sm:w-2/3 sm:h-2/3
-  object-cover cursor-pointer z-10
-  md:rounded-3xl
-  transition-all
-"
+            {videoUrl.endsWith("greek-3.mp4") && (
+                <p className="absolute bottom-6 z-20 text-white/70 text-xs tracking-wide opacity-0 animate-fade-in">
+                    Scroll down for more
+                </p>
+            )}
+        </section>
 
-              controls
-        playsInline
-        preload="metadata"
-        autoPlay={true}
-              muted={true}
-      />
-          {videoUrl === "https://areehownnoqwhzunofay.supabase.co/storage/v1/object/public/videos/greek-3.mp4" && (
-              <p
-                  className="absolute bottom-6 text-white/70 text-xs tracking-wide animate-fade-in
-                             opacity-0">
-                  Scroll down for more
-          </p>)}
-    </section>
-  );
+
+
+    );
 };
 
 export default VideoSection;
