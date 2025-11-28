@@ -48,7 +48,7 @@ const About = () => {
                  the notion that life was more than work was always in the back of my mind,
                     and ultimately I decided to drop the full-time salary.
                  Now <span className={'italic'}>obviously</span> I hope that a career in acting works out,
-                    but I'm not <span className={'italic'}>that</span> hopelessly romantic... I know that the odds are against me.
+                    but I'm not <span className={'italic'}>that</span> idealistic... I know that the odds are against me.
                 </p>
                 
                 <p className="text-lg text-foreground/90 leading-relaxed">
