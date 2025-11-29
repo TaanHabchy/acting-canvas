@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useExperience } from "@/hooks/useExperience";
+import ContactInfo from "@/components/ContactInfo.tsx";
 
 const Resume = () => {
   const { data: experiences, isLoading: experiencesLoading } = useExperience(['short film', 'theatre', 'tv']);
@@ -93,6 +94,10 @@ const Resume = () => {
                   <p className="text-muted-foreground">Gained experience in being an all-time QB, negotiating and distribution of time on the merry-go-round, and sharing of snacks</p>
                 </div>
               </div>
+          </Card>
+          <Card className="p-8 w-full">
+            <h2 className="text-2xl font-bold mb-6 text-foreground">Contact Info</h2>
+            <ContactInfo/>
           </Card>
         </div>
       </main>
