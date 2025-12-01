@@ -63,7 +63,6 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
             {/* blurred background video */}
             <video
                 src={videoUrl}
-                autoPlay
                 muted
                 loop
                 playsInline
@@ -80,6 +79,7 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
 
             {/* foreground video (interactive) */}
             <video
+                ref={videoRef}
                 src={videoUrl}
                 controls
                 autoPlay
