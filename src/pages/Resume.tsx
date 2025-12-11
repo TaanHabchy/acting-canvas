@@ -5,7 +5,7 @@ import { useExperience } from "@/hooks/useExperience";
 import ContactInfo from "@/components/ContactInfo.tsx";
 
 const Resume = () => {
-  const { data: experiences, isLoading: experiencesLoading } = useExperience(['short film', 'theatre', 'tv']);
+  const { data: experiences, isLoading: experiencesLoading } = useExperience(['short film', 'theatre', 'tv', 'film']);
   const { data: training, isLoading: trainingLoading } = useExperience(['training']);
 
   return (
