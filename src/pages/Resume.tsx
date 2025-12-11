@@ -70,7 +70,11 @@ const Resume = () => {
             <h2 className="text-2xl font-bold mb-6 text-foreground">Crew Experience</h2>
               <div className="flex flex-wrap gap-2">
                 <div>
-                  <h3 className="text-xl text-foreground"><strong className={'text-primary'}>Gifted Dreamers Productions</strong> • Production Assistant</h3>
+                  <h3 className="text-xl text-foreground"><strong className={'text-primary'}>Copa90</strong> • Production Assistant</h3>
+                  <p className="text-muted-foreground">Drove gear between locations to setup the equipment for every shoot</p>
+                  <p className="text-muted-foreground">Acted as a stand-in to properly align cameras and lighting, then as security to prevent people from interrupting interviews</p>
+
+                  <h3 className="text-xl text-foreground pt-4"><strong className={'text-primary'}>Gifted Dreamers Productions</strong> • Production Assistant</h3>
                   <p className="text-muted-foreground">Slated every run, operated the boom when necessary, and helped setup lights for most scenes</p>
                   <p className="text-muted-foreground">Contacted local shops to request permission to shoot, then worked as crowd control so our recordings went uninterrupted</p>
                 </div>
