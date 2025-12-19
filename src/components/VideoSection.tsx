@@ -90,7 +90,7 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
       relative z-10
       w-full
       sm:w-2/3
-      md:rounded-3xl
+      md:rounded
       shadow-xl
     "
             />
