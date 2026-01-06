@@ -18,14 +18,7 @@ const Index = () => {
             <p className="text-destructive">Error loading videos: {error.message}</p>
           </div>
         )}
-        {videos && videos.length === 0 && (
-          <div className="h-screen flex items-center justify-center">
-            <p className="text-foreground/70">No videos found</p>
-          </div>
-        )}
-        {videos && videos.map((video) => (
-          <VideoSection key={video.id} videoUrl={video.storage_path} />
-        ))}
+          <VideoSection key={0} videoUrl={"/demo_reel.mp4"} />
       </div>
     </div>
   );

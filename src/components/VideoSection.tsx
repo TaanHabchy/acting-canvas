@@ -10,55 +10,55 @@ const VideoSection = ({ videoUrl }: VideoSectionProps) => {
     const [isVisible, setIsVisible] = useState(false);
 
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    setIsVisible(entry.isIntersecting);
-                });
-            },
-            { threshold: 0.6 } // Play when 60% visible
-        );
-
-        if (videoRef.current) {
-            observer.observe(videoRef.current);
-        }
-
-        return () => {
-            if (videoRef.current) observer.unobserve(videoRef.current);
-        };
-    }, []);
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        if (isVisible) {
-            video.play().catch(() => {});
-        } else {
-            video.pause();
-        }
-    }, [isVisible]);
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        const handleEnded = () => {
-            const next = sectionRef.current?.nextElementSibling as HTMLElement | null;
-            if (next) {
-                next.scrollIntoView({ behavior: "smooth" });
-            }
-        };
-
-        video.addEventListener("ended", handleEnded);
-        return () => video.removeEventListener("ended", handleEnded);
-    }, []);
+    // useEffect(() => {
+    //     const observer = new IntersectionObserver(
+    //         (entries) => {
+    //             entries.forEach((entry) => {
+    //                 setIsVisible(entry.isIntersecting);
+    //             });
+    //         },
+    //         { threshold: 0.6 } // Play when 60% visible
+    //     );
+    //
+    //     if (videoRef.current) {
+    //         observer.observe(videoRef.current);
+    //     }
+    //
+    //     return () => {
+    //         if (videoRef.current) observer.unobserve(videoRef.current);
+    //     };
+    // }, []);
+    //
+    // useEffect(() => {
+    //     const video = videoRef.current;
+    //     if (!video) return;
+    //
+    //     if (isVisible) {
+    //         video.play().catch(() => {});
+    //     } else {
+    //         video.pause();
+    //     }
+    // }, [isVisible]);
+    //
+    // useEffect(() => {
+    //     const video = videoRef.current;
+    //     if (!video) return;
+    //
+    //     const handleEnded = () => {
+    //         const next = sectionRef.current?.nextElementSibling as HTMLElement | null;
+    //         if (next) {
+    //             next.scrollIntoView({ behavior: "smooth" });
+    //         }
+    //     };
+    //
+    //     video.addEventListener("ended", handleEnded);
+    //     return () => video.removeEventListener("ended", handleEnded);
+    // }, []);
 
     return (
         <section
             ref={sectionRef}
-            className="relative h-screen w-full snap-start overflow-hidden flex items-center justify-center"
+            className="relative h-screen w-full snap-start overflow-hidden flex items-center justify-center md:pt-8"
         >
             {/* blurred background video */}
             <video

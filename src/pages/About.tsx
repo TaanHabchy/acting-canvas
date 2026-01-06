@@ -22,7 +22,7 @@ const About = () => {
 
                 {!isLoading && portfolioPhotos.length > 0 && (
                     <div className="mt-16 px-2 sm:px-16">
-                        <div className="columns-1 md:columns-3 [column-fill:_balance] px-2 sm:px-6">
+                        <div className="columns-1 md:columns-3 px-0 sm:px-6">
                             {portfolioPhotos.map((photo) => (
                                 <ImageFadeIn key={photo.id} url={photo.storage_path} />
                             ))}
@@ -40,14 +40,14 @@ const ImageFadeIn = ({ url }: { url: string }) => {
 
     return (
         <div
-            className="mb-6 break-inside-avoid overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="mb-6 break-inside-avoid overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
             style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.5s ease" }}
         >
             <img
                 src={url}
                 alt="Portfolio photo"
                 onLoad={() => setLoaded(true)}
-                className={`w-full h-auto object-cover transition-transform duration-300 mx-auto block max-w-full sm:max-w-none 
+                className={`w-full h-auto object-cover transition-transform duration-300 block max-w-full sm:max-w-none 
           ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-105"}
         `}
                 loading="lazy"
