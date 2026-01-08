@@ -18,7 +18,7 @@ const Index = () => {
             <p className="text-destructive">Error loading videos: {error.message}</p>
           </div>
         )}
-          <VideoSection key={0} videoUrl={"/demo_reel.mp4"} />
+          <VideoSection key={0} videoUrl={"R0i795x38kA"} />
       </div>
     </div>
   );

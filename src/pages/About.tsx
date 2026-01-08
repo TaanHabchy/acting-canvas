@@ -10,10 +10,10 @@ const About = () => {
     return (
         <div className="min-h-screen bg-background">
             <Navigation />
-            <main className="container mx-auto px-6 pb-16">
+            <main className="container mx-auto px-6 pb-16 pt-32">
                 {/* Global loader */}
                 {isLoading && (
-                    <div className="flex justify-center mt-24">
+                    <div className="flex justify-center mt-32">
                         <div className="animate-pulse text-muted-foreground text-sm">
                             Loading photos…
                         </div>
@@ -21,7 +21,7 @@ const About = () => {
                 )}
 
                 {!isLoading && portfolioPhotos.length > 0 && (
-                    <div className="mt-16 px-2 sm:px-16">
+                    <div className="px-2 sm:px-16">
                         <div className="columns-1 md:columns-3 px-0 sm:px-6">
                             {portfolioPhotos.map((photo) => (
                                 <ImageFadeIn key={photo.id} url={photo.storage_path} />
@@ -40,7 +40,7 @@ const ImageFadeIn = ({ url }: { url: string }) => {
 
     return (
         <div
-            className="mb-6 break-inside-avoid overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="md:mb-6 break-inside-avoid overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
             style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.5s ease" }}
         >
             <img

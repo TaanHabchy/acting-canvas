@@ -22,7 +22,7 @@ export interface Experience {
 }
 
 export const useExperience = (
-    categories?: Array<'experience' | 'training' | 'skill' | 'short film' | 'theatre' | 'tv'>
+    categories?: Array<'experience' | 'training' | 'skill' | 'short film' | 'theatre' | 'tv' | 'film'>
 ) => {
   return useQuery({
     queryKey: ['experience', categories],
