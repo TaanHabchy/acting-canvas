@@ -5,41 +5,55 @@
 /* Base color system — dark mode (default) */
 @layer base {
   :root {
-    --background: 0 0% 5%;
-    --foreground: 40 40% 95%;
+    /* Backgrounds */
+    --background: 40 33% 96%;        /* warm off-white / parchment */
+    --foreground: 0 0% 10%;          /* near-black text */
 
-    --card: 0 0% 8%;
-    --card-foreground: 40 40% 95%;
+    --card: 40 33% 98%;
+    --card-foreground: 0 0% 10%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 40 40% 95%;
+    --popover: 40 33% 98%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 45 95% 44.7%;
-    --primary-foreground: 0 0% 5%;
+    /* Primary (buttons, CTAs like "Begin Writing") */
+    --primary: 145 28% 22%;          /* deep editorial green */
+    --primary-foreground: 40 33% 96%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 40 40% 95%;
+    /* Secondary surfaces */
+    --secondary: 40 20% 90%;
+    --secondary-foreground: 0 0% 15%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    /* Muted text */
+    --muted: 40 15% 88%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 38 92% 50%;
-    --accent-foreground: 0 0% 5%;
+    /* Accent (very subtle, mostly unused in UI) */
+    --accent: 40 25% 85%;
+    --accent-foreground: 0 0% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 40 40% 95%;
+    /* Destructive */
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 40 33% 96%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 38 92% 50%;
+    /* Borders & inputs */
+    --border: 40 10% 85%;
+    --input: 40 10% 85%;
+    --ring: 0 0% 10%;
 
     --radius: 0.5rem;
 
-    --gradient-spotlight: linear-gradient(135deg, hsl(38 92% 50% / 0.15), transparent);
-    --shadow-glow: 0 0 40px hsl(38 92% 50% / 0.2);
+    /* Decorative */
+    --gradient-spotlight: linear-gradient(
+            135deg,
+            hsl(40 30% 90% / 0.6),
+            transparent
+    );
+
+    --shadow-glow: 0 8px 24px hsl(0 0% 0% / 0.08);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
+
 
 @layer base {
   * {
