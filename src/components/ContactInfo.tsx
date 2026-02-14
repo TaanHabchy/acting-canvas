@@ -34,7 +34,7 @@ export default function ContactInfo() {
             >
                 Phone: <span className={"hover:text-foreground transition-colors"}>(978) 407-9564</span>
             </p>
-            <p>Location: Dallas, TX</p>
+            <p>Location: New York City</p>
         </div>
     );
 }

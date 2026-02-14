@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useExperience } from "@/hooks/useExperience";
 import ContactInfo from "@/components/ContactInfo.tsx";
+import SocialInfo from "@/components/SocialInfo";
 
 const Resume = () => {
   const { data: experiences, isLoading: experiencesLoading } = useExperience(['short film', 'theatre', 'tv', 'film']);
@@ -103,6 +104,9 @@ const Resume = () => {
             <h2 className="text-2xl font-bold mb-6 text-foreground">Contact Info</h2>
             <ContactInfo/>
           </Card>
+
+            <SocialInfo/>
+
         </div>
       </main>
     </div>
